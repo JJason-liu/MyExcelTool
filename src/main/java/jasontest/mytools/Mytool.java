@@ -15,7 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Mytool {
 	private static final String filePath = "D:\\Documents\\MuMu共享文件夹";
-	private static final String path = filePath + "\\蓉城叶式族谱转换日期后文件";
+	private static final String path = filePath + "\\蓉城叶式族谱转换日期后文件"; 
 	
 	private static int count = 0;
 	// 改变列表
@@ -43,7 +43,7 @@ public class Mytool {
 		if (file.isFile() && (file.getName().endsWith(".xls") || file.getName().endsWith(".xlsx"))) {
 			System.out.println("开始处理文件：" + file.getName());
 //			System.out.println(file.getAbsolutePath() + "********");
-			file = copyFile(file);
+			file = copyFile(file);//不加这个，源文件会被修改，暂时添加，待思考新的方法
 			readAndWriteFile(file);
 			count++;
 		} else if (file.isDirectory() && !file.getPath().contains("蓉城叶式族谱转换日期后文件")) {
@@ -171,7 +171,7 @@ public class Mytool {
 	}
 
 	public static String finalChange(String str) {
-		if (isChina(str) || "不详".contains(str) || str.length() < 3 || str.contains("日")) {
+		if (isChina(str) || str.contains("不详") || str.length() < 3 || str.contains("日")) {
 			return str;
 		}
 
