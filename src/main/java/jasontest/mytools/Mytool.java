@@ -13,6 +13,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import jasontest.mytools.utils.MyUtil;
+
 public class Mytool {
 	private static final String filePath = "D:\\Documents\\MuMu共享文件夹";
 	private static final String path = filePath + "\\蓉城叶式族谱转换日期后文件"; 
@@ -171,7 +173,7 @@ public class Mytool {
 	}
 
 	public static String finalChange(String str) {
-		if (isChina(str) || str.contains("不详") || str.length() < 3 || str.contains("日")) {
+		if (MyUtil.isChina(str) || str.contains("不详") || str.length() < 3 || str.contains("日")) {
 			return str;
 		}
 
@@ -189,7 +191,7 @@ public class Mytool {
 		}
 		// 添加年 月
 		if (!"年".equals(temp.charAt(4) + "") && !"年".equals(temp.charAt(3) + "")) {
-			temp = insertStringInParticularPosition(temp, "年", 4);
+			temp = MyUtil.insertStringInParticularPosition(temp, "年", 4);
 		}
 
 		// 整理月字后面内容
@@ -200,7 +202,7 @@ public class Mytool {
 			if (string.startsWith("〇")) {// 排除一九五七年七月〇四
 				string = string.substring(1, 2);
 			} else {
-				string = insertStringInParticularPosition(string, "十", 1);
+				string = MyUtil.insertStringInParticularPosition(string, "十", 1);
 				if (string.endsWith("〇")) {
 					string = string.substring(0, string.indexOf("〇"));// 排除二〇〇四年一二十〇
 				}
@@ -209,42 +211,4 @@ public class Mytool {
 		}
 		return temp + "日";
 	}
-
-	/**
-	 * 插入字符
-	 * 
-	 * @param src
-	 * @param dec
-	 * @param position
-	 * @return
-	 */
-	public static String insertStringInParticularPosition(String src, String dec, int position) {
-		StringBuffer stringBuffer = new StringBuffer(src);
-		return stringBuffer.insert(position, dec).toString();
-	}
-
-	/**
-	 * 判断是否全为数字
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public static boolean isNumeric(String s) {
-		if (s != null && !"".equals(s.trim()))
-			return s.matches("^[0-9]*$");
-		else
-			return false;
-	}
-
-	/**
-	 * 判断时候全为汉字
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public static boolean isChina(String s) {
-		String reg = "[\\u4e00-\\u9fa5]+";
-		return s.matches(reg);
-	}
-
 }
